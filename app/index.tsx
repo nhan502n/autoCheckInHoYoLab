@@ -1,7 +1,7 @@
-// index.tsx
-import { checkIn } from "@/scripts/checkin";
+// app/page.tsx
 import React, { useState } from "react";
 import { View, Text, Button, ScrollView, Alert } from "react-native";
+import { checkIn } from "../scripts/checkin";
 
 export default function App() {
   const [result, setResult] = useState("");
@@ -15,7 +15,7 @@ export default function App() {
     const start = Date.now();
     const res = await checkIn();
     const end = Date.now();
-    const duration = (end - start) / 1000; // giây
+    const duration = (end - start) / 1000;
     setResult(res);
     setExecutionTime(duration);
     setLoading(false);
