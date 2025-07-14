@@ -1,0 +1,29 @@
+name: Daily Auto Check-In
+
+on:
+  schedule:
+    - cron: "0 16 * * *"  # 16h UTC mỗi ngày = 11h tối Việt Nam
+  workflow_dispatch:      # Cho phép chạy tay từ GitHub
+
+jobs:
+  checkin:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Check-In script
+        env:
+          TOKEN_1: ${{ secrets.TOKEN_1 }}
+          TOKEN_2: ${{ secrets.TOKEN_2 }}
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: npx tsx scripts/checkin.ts
